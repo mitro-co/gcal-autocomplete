@@ -1,7 +1,7 @@
 {
   "name": "Location autocomplete for Google Calendar™",
   "manifest_version": 2,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "content_scripts": [
     {
       "matches": ["*://www.google.com/calendar*render", "*://www.google.com/calendar*render*"],
@@ -10,7 +10,7 @@
       "run_at": "document_end"
     }
   ],
-
+  "icons" : {"128" : "mitro_logo-128.png"},
   "permissions": [
     "tabs", "*://www.google.com/calendar/*", "storage", "*://venues.labs.mitro.co/*"
   ]
