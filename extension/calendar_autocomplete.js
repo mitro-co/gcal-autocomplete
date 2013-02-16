@@ -47,8 +47,9 @@ var scriptToInject = function() {
             // We cannot read directly from the whereBox because that is removed
             // from the DOM before (during?) the XHR
             var wb_ptr = document.getElementById("whereBoxPointer");
-            if (!!wb_ptr) {
+            if (!!wb_ptr && !!(wb_ptr.value)) {
                 var currentLocation = wb_ptr.value;
+                wb_ptr.value = "";
                 var escLoc = encodeURIComponent(currentLocation);
                 var newdata = updateQueryStringParameter(data, 'location', escLoc);
                 console.log('data', data, 'new data', newdata);
