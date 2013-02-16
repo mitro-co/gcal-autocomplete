@@ -1,0 +1,17 @@
+{
+  "name": "Location autocomplete for Google Calendar™",
+  "manifest_version": 2,
+  "version": "0.0.4",
+  "content_scripts": [
+    {
+      "matches": ["*://www.google.com/calendar*render", "*://www.google.com/calendar*render*"],
+      "js": ["jquery-1.9.1.min.js", "jquery-ui-1.10.0.custom.min.js", "calendar_autocomplete.js"],
+      "css" : ["jquery-ui-1.10.0.custom.min.css"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "permissions": [
+    "tabs", "*://www.google.com/calendar/*", "storage", "*://venues.labs.mitro.co/*"
+  ]
+}
