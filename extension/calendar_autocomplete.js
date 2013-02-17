@@ -88,8 +88,8 @@ var inject = function() {
             $newWhereBox.attr('value','');
 
             $whereBox.change(function(){
-                console.log('copying', $(this).attr('value'));
-                $('#whereBoxPointer').attr('value', $(this).attr('value'));
+                console.log('copying', $whereBox.val());
+                $('#whereBoxPointer').attr('value', $whereBox.val());
             });
             //attach autocomplete
             $whereBox.autocomplete({
