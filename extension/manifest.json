@@ -1,7 +1,7 @@
 {
   "name": "Location autocomplete for Google Calendar™",
   "manifest_version": 2,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "content_scripts": [
     {
       "matches": ["*://www.google.com/calendar*render", "*://www.google.com/calendar*render*"],

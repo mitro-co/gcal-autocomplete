@@ -179,11 +179,18 @@ var inject = function() {
                     } else {
                         return $('<li>')
                         .data( "item.autocomplete", null )
-                        .append('<br><img width="18" height="18" src="https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_36x36.png">' 
+                        .append('<br><img width="18" height="18" style="vertical-align:middle" src="https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_36x36.png">' 
                                 + FOURSQUARE_SUGGESTION_LOCATION)
                         .appendTo(ul);
                     }
                 };
+            $('.ui-autocomplete').css('overflow-y', 'scroll');
+            // ensure that the autocomplete box doesn't go off the screen, and also that it takes up as much of the screen as possible
+            // so that no scrolling is required on big monitors.
+            var minAutocompleteHeight = 200;
+            var autocompleteHeight = 0.8 * ($(window).height() - $whereBox[0].getBoundingClientRect().bottom);
+            if (autocompleteHeight < minAutocompleteHeight) autocompleteHeight = minAutocompleteHeight;
+            $('.ui-autocomplete').css('max-height', parseInt(autocompleteHeight, 10)+'px');
 
         } else {
             // wherebox has already been added
