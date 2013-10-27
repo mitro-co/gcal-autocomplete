@@ -188,7 +188,9 @@ var inject = function() {
             // ensure that the autocomplete box doesn't go off the screen, and also that it takes up as much of the screen as possible
             // so that no scrolling is required on big monitors.
             var minAutocompleteHeight = 200;
-            var autocompleteHeight = 0.8 * ($(window).height() - $whereBox[0].getBoundingClientRect().bottom);
+            var windowHeight = $(window).height();
+            var boundingBox = $whereBox[0].getBoundingClientRect();
+            var autocompleteHeight = 0.93 * (windowHeight - boundingBox.bottom);
             if (autocompleteHeight < minAutocompleteHeight) autocompleteHeight = minAutocompleteHeight;
             $('.ui-autocomplete').css('max-height', parseInt(autocompleteHeight, 10)+'px');
 
