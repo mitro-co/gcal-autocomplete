@@ -74,11 +74,30 @@ $('body').append($newWhereBox);
 
 
 // try to figure out where the wherebox is and associate an autocomplete handler with it
-
+var UNIQUE_STRING = 'gcal-autocomplete-ivu2qp948t7ujslfvkmq9p284otilerut';
 var inject = function() {
     var $whereBox = $('.ep-tp input[type=text]').filter('.textinput');
+    $whereBox.addClass(UNIQUE_STRING);
+    var sendKeyEvents = function() {
+        // TODO: figure out how to enable this without horrible performance problems
+        console.log('dispatching event');
+        var event = new KeyboardEvent('keydown');
+        event.keyCode=32;
+        document.querySelector('.' + UNIQUE_STRING).dispatchEvent(event);
+        event = new KeyboardEvent('keypress');
+        event.keyCode=32;
+        document.querySelector('.' + UNIQUE_STRING).dispatchEvent(event);
+        event = new KeyboardEvent('keyup');
+        event.keyCode=32;
+        document.querySelector('.' + UNIQUE_STRING).dispatchEvent(event);
+    };
+
+    var FOURSQUARE_SUGGESTION_LOCATION = "Suggestions: <a style=\"display:inline\" href=\"https://labs.mitro.co/\">Mitro Labs</a> using <a style=\"display:inline\" href=\"https://developer.foursquare.com/overview/venues.html\">Foursquare venue API.</a>";
 
     if ($whereBox && $whereBox.length === 1) {
+        $warningNote = $('<div style="color:red">').text("Editing an existing event? Add a space to venue to save changes.")
+                .hide();
+        $whereBox.after($warningNote);
         if (!($whereBox.attr('id') in added)) {
             console.log('injecting for ' + $whereBox.attr('id'));
             //$whereBox.hide();
@@ -91,65 +110,72 @@ var inject = function() {
                 console.log('copying', $whereBox.val());
                 $('#whereBoxPointer').attr('value', $whereBox.val());
             });
+
+            var addIfPresent = function(a, b) {
+                return a?(a.replace(/[()]/g, ' ') + (b?b:'')):''
+            };
+
+
             //attach autocomplete
             $whereBox.autocomplete({
                 //define callback to format results
                 source: function(req, add){
                     //pass request to server
                     $.getJSON("http://venues.labs.mitro.co/api/v1/venues", {term : req.term}, function(data) {
+                        //cdata.response.venues.push(null);
+                        console.log(data);
                         //create array for response objects
                         var suggestions = [];
                         //process response
-                        console.log(data);
                         $.each(data.response.venues, function(i, venue){
-                        var vl = venue.location;
-                        suggestions.push(venue.name +
-                            " " + vl.address + " "+ vl.city + ", " + vl.state + " " + vl.postalCode);
+                            var vl = venue.location;
+                            var addr = addIfPresent(vl.address, ' ') + addIfPresent(vl.city, ', ') +  addIfPresent(vl.state, ' ') + addIfPresent(vl.postalCode);
+                            if (!vl.address || !vl.city) {
+                                venue.value = vl.lat + ',' + vl.lng + ' (' + addr + ' ' + addIfPresent(venue.name) + ')';
+                            } else {
+                                venue.value = addr + " (" + addIfPresent(venue.name) + ")";
+                            }
+                            suggestions.push(venue);
+                        });
+                        if (suggestions.length)
+                            suggestions.push({'value':''});
+                        // pass array to callback
+                        add(suggestions);
                     });
-                    // pass array to callback
-                    add(suggestions);
-                });
-            },
-            
-            //define select handler
-            select: function(e, ui) {
-                //create formatted friend
-                var location = ui.item.value;
-                $whereBox.attr('value', location);
-                $newWhereBox.attr('value', location);
-
-
-                // The following are various failed attempts to send events
-                // to GCal JS to refresh its cached state
-/*
-                setTimeout(function() {
-                  var evt = document.createEvent("KeyboardEvent");
-                  evt.initKeyboardEvent("keydown", true, true,window,
-                    0, 0, 0, 0, 'e'.charCodeAt(0), 'e'.charCodeAt(0));
-                  //evt.keyCode = 'e'.charCodeAt(0);
-
-                  console.log($whereBox.attr('id'));
-                  var cb = document.getElementById($whereBox.attr('id'));
-                  var cancelled = !cb.dispatchEvent(evt);
-
-
-                    $whereBox.trigger({type: 'keydown', which:'e'.charCodeAt(0)});
-                    $whereBox.trigger({type: 'keypress', which:'e'.charCodeAt(0)});
-                    $whereBox.trigger({type: 'keyup', which:'e'.charCodeAt(0)});
-                    $whereBox.trigger({type: 'change'});
-            }, 500);*/
+                },
                 
-                }
-
-                /*
+ 
                 //define select handler
-                change: function() {
-                    //prevent 'to' field being updated and correct position
-                    $("#to").val("").css("top", 2);
-                }  */
+                select: function(e, ui) {
+                    var venue = ui.item;
+                    console.log(venue);
+                    if (!venue.value) {
+                        return false;
+                    }
+                    var location = ui.item.value;
 
+                    setTimeout(function() {
+                        $newWhereBox.attr('value', location);
+                        $warningNote.show();
+                        sendKeyEvents();
+                    },50);
+                }   
+            }).data('ui-autocomplete')._renderItem = function(ul, venue) {
+                    if (venue.value) {
+                        var vl = venue.location;
+                        return $('<li>')
+                        //.data( "item.autocomplete", venue )
+                        .append($('<a>').text(venue.value))
+                        .appendTo(ul);
+                    } else {
+                        return $('<li>')
+                        .data( "item.autocomplete", null )
+                        .append('<br><img width="18" height="18" src="https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_36x36.png">' 
+                                + FOURSQUARE_SUGGESTION_LOCATION)
+                        .appendTo(ul);
+                    }
+                };
 
-            });
         } else {
             // wherebox has already been added
             ;
@@ -164,7 +190,10 @@ $(function() {
     inject();
     // whenever a new node is insterted, see if we have found a location box
     $(document).bind('DOMNodeInserted', function(e) {
-       inject();
+        var INPUT_RE = /^input$/i;  // fastest method: http://jsperf.com/case-insensitive-string-equals
+        if (INPUT_RE.test(event.target.tagName) || (event.target.querySelector && event.target.querySelector('input') !== null)) {
+            inject();
+        }
     });
 
 });
