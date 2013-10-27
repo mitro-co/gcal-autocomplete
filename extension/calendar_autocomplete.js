@@ -162,10 +162,19 @@ var inject = function() {
                 }   
             }).data('ui-autocomplete')._renderItem = function(ul, venue) {
                     if (venue.value) {
+                        // default is an empty image.
+                        var $img = $('<img style="vertical-algin:middle">').attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+                        try {
+                            var imgUrl = venue.categories[0].icon.prefix  + 'bg_32' + venue.categories[0].icon.suffix;
+                            $img = $('<img style="vertical-algin:middle">').attr('src', imgUrl);
+                        } catch (e) {}
+                        $img.attr('height', 16).attr('width', 16);
+
                         var vl = venue.location;
                         return $('<li>')
+                        .append($img)
                         //.data( "item.autocomplete", venue )
-                        .append($('<a>').text(venue.value))
+                        .append($('<a style="display:inline">').text(venue.value))
                         .appendTo(ul);
                     } else {
                         return $('<li>')
