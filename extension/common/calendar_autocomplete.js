@@ -13,9 +13,8 @@ This lets us register handlers that the page can use.
 // work for various reasons (including a webkit bug:  https://bugs.webkit.org/show_bug.cgi?id=16735)
 // 
 
-
 var added = {};
-
+var helper = new Helper();
 
 
 // this script is injected into the page and overrides xmlhttprequest
@@ -121,7 +120,7 @@ var inject = function() {
                 //define callback to format results
                 source: function(req, add){
                     //pass request to server
-                    $.getJSON("http://venues.labs.mitro.co/api/v1/venues", {term : req.term}, function(data) {
+                    helper.getJSON("http://venues.labs.mitro.co/api/v1/venues", {term : req.term}, function(data) {
                         //cdata.response.venues.push(null);
                         console.log(data);
                         //create array for response objects
