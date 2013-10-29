@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Builder Version</key>
+	<string>534.57.2</string>
+	<key>CFBundleDisplayName</key>
+	<string>Location autocomplete for Google Calendar™</string>
+	<key>CFBundleIdentifier</key>
+	<string>co.mitro.labs.gcal-autocomplete</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.9.100</string>
+	<key>CFBundleVersion</key>
+	<string>3</string>
+	<key>Chrome</key>
+	<dict/>
+	<key>Content</key>
+	<dict>
+		<key>Scripts</key>
+		<dict>
+			<key>Start</key>
+			<array>
+				<string>jquery-1.9.1.min.js</string>
+				<string>jquery-ui-1.10.0.custom.min.js</string>
+				<string>helper.js</string>
+				<string>calendar_autocomplete.js</string>
+			</array>
+		</dict>
+		<key>Whitelist</key>
+		<array>
+			<string>*://www.google.com/calendar/*</string>
+			<string>*://venues.labs.mitro.co/*</string>
+		</array>
+	</dict>
+	<key>ExtensionInfoDictionaryVersion</key>
+	<string>1.0</string>
+	<key>Permissions</key>
+	<dict>
+		<key>Website Access</key>
+		<dict>
+			<key>Include Secure Pages</key>
+			<true/>
+			<key>Level</key>
+			<string>All</string>
+		</dict>
+	</dict>
+	<key>Website</key>
+	<string>https://labs.mitro.co</string>
+</dict>
+</plist>

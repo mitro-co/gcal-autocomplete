@@ -3,7 +3,7 @@ SRCS_DIR:=$(shell pwd)/extension
 
 FIREFOX_BUILD_DIR=$(BUILD_DIR)/firefox
 FIREFOX_SUBDIRS=$(FIREFOX_BUILD_DIR)/data $(FIREFOX_BUILD_DIR)/lib
-SAFARI_BUILD_DIR=$(BUILD_DIR)/safari
+SAFARI_BUILD_DIR=$(BUILD_DIR)/safari.safariextension
 CHROME_BUILD_DIR=$(BUILD_DIR)/chrome
 
 COMMON_SRCS_DIR=$(SRCS_DIR)/common
@@ -12,9 +12,6 @@ SAFARI_SRCS_DIR=$(SRCS_DIR)/safari
 CHROME_SRCS_DIR=$(SRCS_DIR)/chrome
 
 COMMON_SRCS=$(wildcard $(COMMON_SRCS_DIR)/*.*)
-FIREFOX_SRCS=$(wildcard $(FIREFOX_SRCS_DIR)/*.*)
-SAFARI_SRCS=$(wildcard $(SAFARI_SRCS_DIR)/*.*)
-CHROME_SRCS=$(wildcard $(SAFARI_SRCS_DIR)/*.*)
 
 define MKDIR_RULE
 $(1):
