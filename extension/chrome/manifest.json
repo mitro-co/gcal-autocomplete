@@ -5,12 +5,12 @@
   "content_scripts": [
     {
       "matches": ["*://www.google.com/calendar*render", "*://www.google.com/calendar*render*"],
-      "js": ["jquery-1.9.1.min.js", "jquery-ui-1.10.0.custom.min.js", "calendar_autocomplete.js"],
+      "js": ["jquery-1.9.1.min.js", "jquery-ui-1.10.0.custom.min.js", "helper.js", "calendar_autocomplete.js"],
       "css" : ["jquery-ui-1.10.0.custom.min.css"],
       "run_at": "document_end"
     }
   ],
-  "icons" : {"128" : "mitro_logo-128.png"},
+  "icons" : {"128" : "logo_temp.png"},
   "permissions": [
     "tabs", "*://www.google.com/calendar/*", "storage", "*://venues.labs.mitro.co/*"
   ]
