@@ -39,6 +39,8 @@ FIREFOX_DEPS= \
 SAFARI_DEPS= \
     $(foreach file,$(COMMON_SRCS),$(SAFARI_BUILD_DIR)/$(notdir $(file))) \
     $(SAFARI_BUILD_DIR)/helper.js \
+    $(SAFARI_BUILD_DIR)/background.html \
+    $(SAFARI_BUILD_DIR)/background.js \
     $(SAFARI_BUILD_DIR)/Info.plist
 
 CHROME_DEPS= \
@@ -60,6 +62,12 @@ $(SAFARI_BUILD_DIR)/helper.js: $(FIREFOX_BUILD_DIR)
 	
 $(SAFARI_BUILD_DIR)/Info.plist: $(SAFARI_BUILD_DIR)
 	@cp $(SAFARI_SRCS_DIR)/Info.plist $(SAFARI_BUILD_DIR)
+	
+$(SAFARI_BUILD_DIR)/background.html: $(SAFARI_BUILD_DIR)
+	@cp $(SAFARI_SRCS_DIR)/background.html $(SAFARI_BUILD_DIR)
+	
+$(SAFARI_BUILD_DIR)/background.js: $(SAFARI_BUILD_DIR)
+	@cp $(SAFARI_SRCS_DIR)/background.js $(SAFARI_BUILD_DIR)
 
 $(CHROME_BUILD_DIR)/helper.js: $(CHROME_BUILD_DIR)
 	@cp $(CHROME_SRCS_DIR)/helper.js $(CHROME_BUILD_DIR)
