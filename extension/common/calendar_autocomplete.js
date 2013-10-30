@@ -7,11 +7,11 @@ This lets us register handlers that the page can use.
 
 // Google calendar js does some weird thing where it caches the state of the form
 // This means that when we change the form, it doesn't know, and uses the old location
-// 
+//
 // As a hack, I'm currently overriding xmlhttprequest until I can figure out how to trigger
 // google calendar's js to notice the change. I tried sending various events, but that doesn't 
 // work for various reasons (including a webkit bug:  https://bugs.webkit.org/show_bug.cgi?id=16735)
-// 
+//
 
 var added = {};
 var helper = new Helper();
@@ -91,7 +91,7 @@ var inject = function() {
         document.querySelector('.' + UNIQUE_STRING).dispatchEvent(event);
     };
 
-    var FOURSQUARE_SUGGESTION_LOCATION = "Suggestions: <a style=\"display:inline\" href=\"https://labs.mitro.co/\">Mitro Labs</a> using <a style=\"display:inline\" href=\"https://developer.foursquare.com/overview/venues.html\">Foursquare venue API.</a>";
+    var FOURSQUARE_SUGGESTION_LOCATION = "Suggestions: <a style=\"display:inline\" href=\"https://www.mitro.co/calendar-autocomplete.html\">Mitro Labs</a> using <a style=\"display:inline\" href=\"https://developer.foursquare.com/overview/venues.html\">Foursquare venue API.</a>";
 
     if ($whereBox && $whereBox.length === 1) {
         $warningNote = $('<div style="color:red">').text("Editing an existing event? Add a space to venue to save changes.")

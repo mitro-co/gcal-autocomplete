@@ -11,13 +11,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1.2</string>
+	<string>0.1.5</string>
 	<key>CFBundleVersion</key>
 	<string>3</string>
 	<key>Chrome</key>
 	<dict>
-		<key>Global Page</key>
-		<string>background.html</string>
 	</dict>
 	<key>Content</key>
 	<dict>
@@ -54,6 +52,6 @@
 		</dict>
 	</dict>
 	<key>Website</key>
-	<string>https://labs.mitro.co</string>
+	<string>https://www.mitro.co/calendar-autocomplete.html</string>
 </dict>
 </plist>
